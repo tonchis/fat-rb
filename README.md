@@ -24,7 +24,7 @@ To get your `:value` you usually do `hash["foo"]["bar"]["baz"]`. But what happen
 I find more comfortable to ask if I can walk to `:value` using the keys `"foo"`, `"bar"`, `"baz"`. If I can't, tell me where the path ends.
 
 ```ruby
-require "fat"
+require "fat-rb"
 
 Fat.at(hash, "foo", "bar", "baz")
 # => :value
