@@ -1,7 +1,7 @@
 module Fat
   FatError = Class.new(StandardError)
 
-  @fat ||= ->(hash, *args) do
+  def self.at(hash, *args)
     fields = args.length == 1 ? args.first.split(".") : args
 
     value = hash
@@ -16,12 +16,8 @@ module Fat
     value
   end
 
-  def self.at(hash, *args)
-    @fat.(hash, *args)
-  end
-
   def at(*args)
-    Fat.instance_variable_get(:@fat).(self, *args)
+    Fat.at(self, *args)
   end
 end
 
