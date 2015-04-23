@@ -32,9 +32,9 @@ scope do
   end
 
   test "namespaced strings" do |hash|
-    assert_equal :found, Fat.at_path(hash, "foo.bar.baz")
+    assert_equal :found, Fat.at_string_path(hash, "foo.bar.baz")
 
-    exception = assert_raise(Fat::FatError) { Fat.at_path(hash, "foo.not.baz") }
+    exception = assert_raise(Fat::FatError) { Fat.at_string_path(hash, "foo.not.baz") }
     assert_equal "No hash found at foo.not", exception.message
   end
 end
@@ -51,9 +51,9 @@ scope do
   end
 
   test "namespaced symbols" do |hash|
-    assert_equal :found, Fat.at_path(hash, "foo:bar:baz")
+    assert_equal :found, Fat.at_symbol_path(hash, "foo:bar:baz")
 
-    exception = assert_raise(Fat::FatError) { Fat.at_path(hash, "foo:not:baz") }
+    exception = assert_raise(Fat::FatError) { Fat.at_symbol_path(hash, "foo:not:baz") }
     assert_equal "No hash found at foo.not", exception.message
   end
 end
@@ -77,7 +77,7 @@ scope do
 
   test "honor Fat interface" do |hash|
     assert_equal :found, hash.at("foo", "bar", "baz")
-    assert_equal :found, hash.at_path("foo.bar.baz")
+    assert_equal :found, hash.at_string_path("foo.bar.baz")
   end
 end
 

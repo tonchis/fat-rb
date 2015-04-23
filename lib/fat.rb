@@ -1,8 +1,13 @@
 module Fat
   FatError = Class.new(StandardError)
 
-  def self.at_path(hash, path)
-    fields = parse_path(path)
+  def self.at_string_path(hash, path)
+    fields = path.split('.')
+    self.at(hash, *fields)
+  end
+
+  def self.at_symbol_path(hash, path)
+    fields = path.split(':').map(&:to_sym)
     self.at(hash, *fields)
   end
 
@@ -17,23 +22,15 @@ module Fat
     hash
   end
 
-  def self.parse_path(path)
-    fields = path.split(".")
-
-    if fields.length == 1
-      fields = path.split(":")
-      fields.map(&:to_sym)
-    else
-      fields
-    end
+  def at_string_path(path)
+    Fat.at_string_path(self, path)
   end
 
-  def at_path(*args)
-    Fat.at_path(self, *args)
+  def at_symbol_path(path)
+    Fat.at_symbol_path(self, path)
   end
 
   def at(*args)
     Fat.at(self, *args)
   end
 end
-
