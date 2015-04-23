@@ -21,13 +21,6 @@ scope do
 end
 
 scope do
-  test "single argument must be a namespace" do
-    exception = assert_raise(Fat::FatError) { Fat.at({"foo" => "bar"}, "foo") }
-    assert_equal "Single argument expected to be a namespace with dots (.) or colons (:)", exception.message
-  end
-end
-
-scope do
   setup do
     {
       "foo" => {
@@ -39,9 +32,9 @@ scope do
   end
 
   test "namespaced strings" do |hash|
-    assert_equal :found, Fat.at(hash, "foo.bar.baz")
+    assert_equal :found, Fat.at_path(hash, "foo.bar.baz")
 
-    exception = assert_raise(Fat::FatError) { Fat.at(hash, "foo.not.baz") }
+    exception = assert_raise(Fat::FatError) { Fat.at_path(hash, "foo.not.baz") }
     assert_equal "No hash found at foo.not", exception.message
   end
 end
@@ -58,9 +51,9 @@ scope do
   end
 
   test "namespaced symbols" do |hash|
-    assert_equal :found, Fat.at(hash, "foo:bar:baz")
+    assert_equal :found, Fat.at_path(hash, "foo:bar:baz")
 
-    exception = assert_raise(Fat::FatError) { Fat.at(hash, "foo:not:baz") }
+    exception = assert_raise(Fat::FatError) { Fat.at_path(hash, "foo:not:baz") }
     assert_equal "No hash found at foo.not", exception.message
   end
 end
@@ -84,7 +77,7 @@ scope do
 
   test "honor Fat interface" do |hash|
     assert_equal :found, hash.at("foo", "bar", "baz")
-    assert_equal :found, hash.at("foo.bar.baz")
+    assert_equal :found, hash.at_path("foo.bar.baz")
   end
 end
 

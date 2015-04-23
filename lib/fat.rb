@@ -1,9 +1,12 @@
 module Fat
   FatError = Class.new(StandardError)
 
-  def self.at(hash, *args)
-    fields = parse_args(*args)
+  def self.at_path(hash, path)
+    fields = parse_path(path)
+    self.at(hash, *fields)
+  end
 
+  def self.at(hash, *fields)
     fields[0..-1].each_with_index do |field, index|
       hash = hash[field]
       if index != fields.length - 1 && !hash.kind_of?(Hash)
@@ -14,22 +17,19 @@ module Fat
     hash
   end
 
-  def self.parse_args(*args)
-    return args if args.length > 1
-
-    fields = args.first.split(".")
+  def self.parse_path(path)
+    fields = path.split(".")
 
     if fields.length == 1
-      fields = args.first.split(":")
-
-      if fields.length == 1
-        raise FatError, "Single argument expected to be a namespace with dots (.) or colons (:)"
-      else
-        fields.map(&:to_sym)
-      end
+      fields = path.split(":")
+      fields.map(&:to_sym)
     else
       fields
     end
+  end
+
+  def at_path(*args)
+    Fat.at_path(self, *args)
   end
 
   def at(*args)

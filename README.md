@@ -59,7 +59,7 @@ hash.at("foo", "bar", "baz")
 # => :value
 ```
 
-You can also *namespace* the keys with dots `.` or colons `:` if they are all Strings or Symbols, respectively.
+You can also *namespace* the keys with dots `.` or colons `:` using the `at_path` method if they are all Strings or Symbols, respectively.
 
 ```ruby
 Hash.include(Fat)
@@ -72,7 +72,7 @@ hash = {
   }
 }
 
-hash.at("foo.bar.baz")
+hash.at_path("foo.bar.baz")
 # => :value
 
 hash = {
@@ -83,7 +83,7 @@ hash = {
   }
 }
 
-hash.at("foo:bar:baz")
+hash.at_path("foo:bar:baz")
 # => :value
 ```
 
