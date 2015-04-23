@@ -92,3 +92,8 @@ scope do
   end
 end
 
+scope do
+  test 'one element string path' do
+    assert_equal 'foo', Fat.at_string_path({ 'a' => 'foo'}, 'a')
+  end
+end
